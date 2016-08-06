@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Required meta tags always come first -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./pagination.css" />
+	<link rel="stylesheet" href="./main.css" />
+</head>
+<body>
+	<div id="data-container"></div>
+	<div class="col-md-6 col-md-offset-2">
+		<div id="pagination-container">
+
+		</div>
+	</div>
+	<!-- jQuery first, then Tether, then Bootstrap JS. -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
+	<script src="./pagination.min.js"></script>
+	<script>
+		// Initialize Firebase - T
+		var config = {
+			apiKey: "AIzaSyCerHcTyY8TejRSdqYxqX5DGMEux3gAvyQ",
+			authDomain: "survey-6242b.firebaseapp.com",
+			databaseURL: "https://survey-6242b.firebaseio.com",
+			storageBucket: "survey-6242b.appspot.com",
+		};
+		firebase.initializeApp(config);
+
+		var database = firebase.database();
+
+		//Very simple write to database. We'll use our data once all the pages are finised
+		// TODO: push data once the survey is finished
+		function writeUserData(userId, name, email) {
+			firebase.database().ref('user/' + userId).set({
+				username: name,
+				email: email
+			});
+		}
+		writeUserData(1, "Tahnik", "tahnik@live.co.uk");
+
+		function simpleTemplating(data) {
+			// this is our each page
+			var html = '<div class="col-md-8 col-md-offset-2 custom-div">';
+			// and this is the data inside the page. We will treat each page separate
+			$.each(data, function(index, item){
+				html += '<li class="list-group-item">'+ item +'</li>';
+			});
+			html += '</div>';
+			return html;
+		}
+
+		$('#pagination-container').pagination({
+			// data here is basically each page that we are creating.
+			// We can mutliple HTML pages for each page and use a URL to read it
+			// Doc source: http://paginationjs.com/docs/index.html#Commonlyused
+			// TODO: Add pages
+			dataSource: [1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7],
+			className: 'paginationjs-theme-blue',
+			callback: function(data, pagination) {
+				var html = simpleTemplating(data);
+				$('#data-container').html(html);
+			}
+		})
+	</script>
+</body>
+</html>
