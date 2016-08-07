@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Droppable - Revert draggable position</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <style>
+  #draggable, #draggable2, #draggable3 { width: 100px; height: 100px; padding: 0.5em; float: left; margin: 10px 10px 10px 0; }
+  #droppable { width: 100px; height: 100px; padding: 0.5em; float: left; margin: 10px; }
+  #droppable2 { width: 100px; height: 100px; padding: 0.5em; float: left; margin: 10px; }
+  #droppable3 { width: 100px; height: 100px; padding: 0.5em; float: left; margin: 10px; }
+  </style>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+  <script>
+ var dropped="false";
+  $( function() {
+    var draggableId;
+    var droppableId;
+    $( "#draggable" ).draggable({ revert: "valid" });
+    $( "#draggable2" ).draggable({ revert: "invalid",snap: ".ui-widget-header", snapMode:'inner'});
+    $( "#draggable3" ).draggable({ revert: "invalid",snap: ".ui-widget-header", snapMode:'inner'});
+ 
+    $( "#droppable" ).droppable({
+      classes: {
+        "ui-droppable-active": "ui-state-active",
+        "ui-droppable-hover": "ui-state-hover",
+      },
+      drop: function( event, ui ) {
+               $( this )
+          .addClass( "ui-state-highlight" )
+          .find( "p" )
+            .html( "Dropped!" )
+               $(this).droppable('option', 'accept', ui.draggable);
+          draggableId = ui.draggable.attr("id");
+          droppableId = $(this).attr("id");
+      },
+        out: function( event, ui ) {
+          $( this )
+          .removeClass( "ui-state-highlight" )
+          .find( "p" )
+            .html( "1" )
+          $(this).droppable('option', 'accept', 'div');
+      },
+        
+    });
+      $( "#droppable2" ).droppable({
+      classes: {
+        "ui-droppable-active": "ui-state-active",
+        "ui-droppable-hover": "ui-state-hover"
+      },
+      drop: function( event, ui ) {
+        $( this )
+          .addClass( "ui-state-highlight" )
+          .find( "p" )
+            .html( "Dropped!" );
+           $(this).droppable('option', 'accept', ui.draggable);
+      },
+        out: function( event, ui ) {
+          $( this )
+          .removeClass( "ui-state-highlight" )
+          .find( "p" )
+            .html( "2" );
+            $(this).droppable('option', 'accept', 'div');
+      }
+    });
+      
+      $( "#droppable3" ).droppable({
+      classes: {
+        "ui-droppable-active": "ui-state-active",
+        "ui-droppable-hover": "ui-state-hover"
+      },
+      drop: function( event, ui ) {
+        $( this )
+          .addClass( "ui-state-highlight" )
+          .find( "p" )
+            .html( "Dropped!" );
+           $(this).droppable('option', 'accept', ui.draggable);
+      },
+        out: function( event, ui ) {
+          $( this )
+          .removeClass( "ui-state-highlight" )
+          .find( "p" )
+            .html( "3" );
+            $(this).droppable('option', 'accept', 'div');
+      }
+    });
+      
+    $( "#target" ).click(function() {
+        console.log(draggableId + " - dragId")
+        console.log(droppableId + " - dropID")
+         $( "span" ).text(draggableId + " - dragId | " + droppableId + " - dropID");
+});
+    
+  } );
+
+    
+  </script>
+</head>
+<body>
+ 
+<!--
+<div id="draggable" class="ui-widget-content">
+  <p>I revert when I'm dropped</p>
+</div>
+-->
+ 
+<div id="draggable2" class="ui-widget-content">
+  <p>My team</p>
+</div>
+    
+<div id="draggable3" class="ui-widget-content">
+  <p>My Cohort</p>
+</div>
+ 
+<div id="droppable" class="ui-widget-header">
+  <p>1</p>
+</div>
+    
+<div id="droppable2" class="ui-widget-header">
+  <p>2</p>
+</div>
+<div id="droppable3" class="ui-widget-header">
+<p>3</p>
+</div>
+<p>Result - <span></span></p>
+<button id="target">Send</button>
+ 
+ 
+</body>
+</html>

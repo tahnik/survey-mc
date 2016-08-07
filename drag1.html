@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Draggable + Sortable</title>
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <style>
+  ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
+  li { margin: 5px; padding: 5px; width: 150px; }
+  </style>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>'
+  <script>
+  $( function() {
+    $( "#sortable" ).sortable({
+      revert: true
+    });
+    $( "#draggable" ).draggable({
+      connectToSortable: "#sortable",
+      helper: "clone",
+      revert: "invalid"
+    });
+    $( "ul, li" ).disableSelection();
+  } );
+  </script>
+</head>
+<body>
+ 
+<!--
+<ul>
+  <li id="draggable" class="ui-state-highlight">Drag me down</li>
+</ul>
+-->
+ Rev - <span></span>
+<ul id="sortable">
+  <li class="ui-state-default" id="1">Item 1</li>
+  <li class="ui-state-default" id="2">Item 2</li>
+  <li class="ui-state-default" id="3">Item 3</li>
+  <li class="ui-state-default" id="4">Item 4</li>
+  <li class="ui-state-default" id="5">Item 5</li>
+</ul>
+    <div></div>
+ <button id="target">Button</button>
+<script>
+function disp( divs ) {
+  var a = [];
+  for ( var i = 0; i < divs.length; i++ ) {
+    a.push( divs[ i ].id );
+  }
+  $( "span" ).text( a.join( " " ) );
+}
+ 
+$( "#target" ).click(function() {
+  alert( "Handler for .click() called." );
+    disp( $( "li" ).toArray() );
+});
+
+</script>
+    
+</body>
+</html>
