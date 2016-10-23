@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Draggable + Sortable</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <style>
+  ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
+  li { margin: 5px; padding: 5px; width: 150px; }
+  </style>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#sortable" ).sortable({
+      revert: true
+    });
+      $( "#sortable2" ).sortable({
+      revert: true
+    });
+    $( "#draggable" ).draggable({
+      connectToSortable: "#sortable,#sortable2",
+      helper: "clone",
+      revert: "invalid"
+    });
+      $( "#draggable2" ).draggable({
+      connectToSortable: "#sortable,#sortable2",
+      helper: "clone",
+      revert: "invalid"
+    });
+    $( "ul, li" ).disableSelection();
+  } );
+  </script>
+</head>
+<body>
+  Rev - <span></span>
+<ul>
+  <li id="draggable" class="ui-state-highlight" id="drag1">Drag me down</li>
+  <li id="draggable2" class="ui-state-highlight" id="drag2">Drag 2</li>
+</ul>
+ 
+<ul id="sortable">
+  <li class="ui-state-default">Item 1</li>
+  <li class="ui-state-default">Item 2</li>
+  <li class="ui-state-default">Item 3</li>
+  <li class="ui-state-default">Item 4</li>
+  <li class="ui-state-default">Item 5</li>
+</ul>
+    
+<ul id="sortable2">
+  <li class="ui-state-default">Item 6</li>
+  <li class="ui-state-default">Item 7</li>
+  <li class="ui-state-default">Item 8</li>
+  <li class="ui-state-default">Item 9</li>
+  <li class="ui-state-default">Item 10</li>
+</ul>
+ 
+<button id="target">Button</button>
+<script>
+function disp( divs ) {
+  var a = [];
+  for ( var i = 0; i < divs.length; i++ ) {
+    a.push( divs[ i ].innerHTML );
+  }
+  $( "span" ).text( a.join( " " ) );
+}
+ 
+$( "#target" ).click(function() {
+  alert( "Handler for .click() called." );
+    disp( $( "li" ).toArray() );
+});
+
+</script>
+</body>
+</html>
